@@ -2,13 +2,13 @@ const User = require('../models/User');
 
 module.exports = {
 
-    create(){
+    create(name) {
         const user = new User();
-
-        user.name = 'name';
-      
-        user.save((err)=>{
-          console.log("creation error-->",err)
-        })
+        user.name = name;
+        return Promise.promisify(user.save.bind(user))();
+    },
+    select(userId) {
+       if(userId) return Promise.promisify(User.findOne.bind(User))(userId);
+       return Promise.promisify(User.find.bind(User))();
     }
 }
