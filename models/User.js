@@ -1,8 +1,6 @@
-const {
-    mongoose
-} = require('../config/mongoose');
+const { model } = require('../config/mongoose');
 
-const User = mongoose.model('User', {
+const User = model('User', {
     name: {
         type: String,
         default: 'user'
