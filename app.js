@@ -27,6 +27,7 @@ routes.forEach(route => app.use(route.path, route.handler));
 
 // set env to app
 app.set('env', require('./config/env').env);
+console.log('-->',process.env.NODE_ENV)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
