@@ -7,6 +7,11 @@ const User = mongoose.model('User', {
         type: String,
         default: 'user'
     },
+    email:{
+       type: String,
+       required : true,
+       unique: true
+    },
     createdAt:{
         type: Date,
         default: Date.now

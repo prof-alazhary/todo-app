@@ -21,12 +21,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-
+// attach routes to app  
 const routes = require('./config/routes');
-
 routes.forEach(route => app.use(route.path, route.handler));
+
+// set env to app
+app.set('env', require('./config/env').env);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
