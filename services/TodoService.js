@@ -1,4 +1,5 @@
-const Todo = require('../models/Todo');
+const Todo = require('../models/Todo'),
+    { ObjectId } = require('../config/mongoose').Types;
 
 module.exports = {
 
@@ -18,15 +19,15 @@ module.exports = {
                 }
             });
         } else {
-            return Promise.promisify(Todo.updateOne(todo.id,{
+            return Promise.promisify(Todo.updateOne.bind(Todo))({_id:ObjectId(todo.id)},{
                 $set: {
                     done: todo.done
                 }
-            }));
+            });
         }
     },
     select(userId) {
-        
+
         return Promise.promisify(Todo.find.bind(Todo))({ user: userId });
     }
 }
