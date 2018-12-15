@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const UserService = require('../services/UserService');
+const UserService = require('../services/UserService'),
+     TodoService = require('../services/TodoService');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
 
-  UserService.select().then(users => {
-    res.render('users/index', { users });
-  })
-  //res.send('respond with a resource');
+  UserService.select()
+  .then(users => res.render('users/index', { users }))
+  .catch(error=> res.render('error', { error }));
 });
 
 router.get('/new', function(req, res, next){
@@ -18,16 +18,17 @@ router.get('/new', function(req, res, next){
 
 router.post('/new', function(req, res, next){
   const user = req.body;
-  UserService.create(user).then(ress=>{
-    res.redirect('/users')
-  }).catch(error=>{
-    res.render('error', { error } );
-  })
+  UserService.create(user)
+  .then(ress=>res.redirect('/users'))
+  .catch(error=> res.render('error', { error }));
 })
 
 router.get('/:id/todos', function (req, res, next) {
-  console.log(req.params)
-  res.send('respond with a resourceeee');
+  const userId = req.params.id;
+
+  TodoService.select(userId)
+  .then(todos=>res.render('todos/index',{todos, userId}))
+  .catch(error=> res.render('error', { error }));
 });
 
 module.exports = router;

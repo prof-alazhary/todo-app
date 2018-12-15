@@ -2,14 +2,14 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
+<%console.log(todos)%>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <div class="todolist not-done">
              <h1>Todos</h1>
-                <input type="text" class="form-control add-todo" placeholder="Add todo, then press Enter..">
+                <input type="text" class="form-control add-todo" data-url="/todos/new" data-user="<%=userId%>" placeholder="Add todo, then press Enter..">
                     <button id="checkAll" class="btn btn-success">Mark all as done</button>
                     
                     <hr>
@@ -66,8 +66,11 @@ $('.add-todo').on('keypress',function (e) {
       e.preventDefault
       if (e.which == 13) {
            if($(this).val() != ''){
-           var todo = $(this).val();
-            createTodo(todo); 
+           var todo = $(this).val(),
+                url = $(this).data('url'),
+                user = $(this).data('user');
+
+            createTodo(todo,user,url); 
             countTodos();
            }else{
                // some validation
@@ -96,10 +99,25 @@ function countTodos(){
 }
 
 //create task
-function createTodo(text){
+function createTodo(text,user,url){
     var markup = '<li class="ui-state-default"><div class="checkbox"><label><input type="checkbox" value="" />'+ text +'</label></div></li>';
     $('#sortable').append(markup);
     $('.add-todo').val('');
+
+    $.ajax({
+        url,
+        method:'POST',
+        data:{
+            task:text,
+            user
+        },
+        success:function(res){
+            console.log(res)
+        },
+        error:function(err){
+            console.log(err)
+        }
+    })
 }
 
 //mark task as done

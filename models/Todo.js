@@ -3,8 +3,7 @@ const { model } = require('../config/mongoose');
 const Todo = model('Todo', {
     user:{
         type: String,
-        require: true,
-        unique: true
+        require: true
     },
     task: {
         type: String,
