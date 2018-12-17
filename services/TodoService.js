@@ -15,13 +15,13 @@ module.exports = {
         if (allDone) {
             return Promise.promisify(Todo.update.bind(Todo))({ user: userId }, {
                 $set: {
-                    done: allDone
+                    done: true
                 }
             });
         } else {
             return Promise.promisify(Todo.updateOne.bind(Todo))({_id:ObjectId(todo.id)},{
                 $set: {
-                    done: todo.done
+                    done: true
                 }
             });
         }

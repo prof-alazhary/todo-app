@@ -2,7 +2,7 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<%console.log(todos)%>
+
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <div class="container">
     <div class="row">
@@ -14,27 +14,22 @@
                     
                     <hr>
                     <ul id="sortable" class="list-unstyled">
+                    <% todos.forEach(todo=> {
+                        if(!todo.done){    
+                    %>
+
                     <li class="ui-state-default">
                         <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" />Take out the trash</label>
+                            <label data-url="/todos/<%=todo.id%>/update">
+                                <input type="checkbox" value="" />
+                                <%= todo.task %>
+                            </label>
                         </div>
                     </li>
-                    <li class="ui-state-default">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" />Buy bread</label>
-                        </div>
-                    </li>
-                    <li class="ui-state-default">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="" />Teach penguins to fly</label>
-                        </div>
-                    </li>
+                    <%}})%>
                 </ul>
                 <div class="todo-footer">
-                    <strong><span class="count-todos"></span></strong> Items Left
+                    <strong><span class="count-todos"></span></strong> task Left
                 </div>
             </div>
         </div>
@@ -42,8 +37,11 @@
             <div class="todolist">
              <h1>Already Done</h1>
                 <ul id="done-items" class="list-unstyled">
-                    <li>Some item <button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span></button></li>
-                    
+                    <% todos.forEach(todo=> {
+                        if(todo.done){    
+                    %>
+                    <li> <%=todo.task%> <button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span></button></li>
+                    <%}})%>
                 </ul>
             </div>
         </div>
@@ -80,9 +78,13 @@ $('.add-todo').on('keypress',function (e) {
 // mark task as done
 $('.todolist').on('change','#sortable li input[type="checkbox"]',function(){
     if($(this).prop('checked')){
-        var doneItem = $(this).parent().parent().find('label').text();
+        var taskLbl = $(this).parent().parent().find('label'),
+            task = taskLbl.text(),
+            url = taskLbl.data('url');
+
         $(this).parent().parent().parent().addClass('remove');
-        done(doneItem);
+
+        done(task, url);
         countTodos();
     }
 });
@@ -121,11 +123,23 @@ function createTodo(text,user,url){
 }
 
 //mark task as done
-function done(doneItem){
+function done(doneItem, url){
     var done = doneItem;
     var markup = '<li>'+ done +'<button class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>';
     $('#done-items').append(markup);
+
     $('.remove').remove();
+
+    $.ajax({
+        url,
+        method:'PUT',
+        success:function(res){
+            console.log(res)
+        },
+        error:function(err){
+            console.log(err)
+        }
+    })
 }
 
 //mark all tasks as done
