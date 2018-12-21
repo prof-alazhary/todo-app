@@ -102,9 +102,6 @@ function countTodos(){
 
 //create task
 function createTodo(text,user,url){
-    var markup = '<li class="ui-state-default"><div class="checkbox"><label><input type="checkbox" value="" />'+ text +'</label></div></li>';
-    $('#sortable').append(markup);
-    $('.add-todo').val('');
 
     $.ajax({
         url,
@@ -115,6 +112,9 @@ function createTodo(text,user,url){
         },
         success:function(res){
             console.log(res)
+            var markup = '<li class="ui-state-default"><div class="checkbox"><label><input type="checkbox" value="" />'+ text +'</label></div></li>';
+            $('#sortable').append(markup);
+            $('.add-todo').val('');
         },
         error:function(err){
             console.log(err)
@@ -124,17 +124,16 @@ function createTodo(text,user,url){
 
 //mark task as done
 function done(doneItem, url){
-    var done = doneItem;
-    var markup = '<li>'+ done +'<button class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>';
-    $('#done-items').append(markup);
-
-    $('.remove').remove();
 
     $.ajax({
         url,
         method:'PUT',
         success:function(res){
             console.log(res)
+            var done = doneItem;
+            var markup = '<li>'+ done +'<button class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>';
+            $('#done-items').append(markup);
+            $('.remove').remove();
         },
         error:function(err){
             console.log(err)
