@@ -4,17 +4,21 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "run test"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha"
   },
   "author": "Mohammed Alazhary",
   "dependencies": {
     "bluebird": "^3.5.3",
+    "chai": "^4.2.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "mocha": "^5.2.0",
     "mongoose": "^5.3.14",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "sinon": "^7.2.2",
+    "sinon-mongoose": "^2.2.1"
   }
 }
