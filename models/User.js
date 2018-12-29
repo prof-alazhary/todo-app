@@ -16,4 +16,8 @@ const User = model('User', {
     }
 });
 
+User.findOne = Promise.promisify(User.findOne.bind(User));
+User.find = Promise.promisify(User.find.bind(User));
+User.create = Promise.promisify(User.create.bind(User));
+
 module.exports = User;
