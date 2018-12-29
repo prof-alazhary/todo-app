@@ -19,4 +19,11 @@ const Todo = model('Todo', {
     }
 });
 
+
+Todo.updateOne = Promise.promisify(Todo.updateOne.bind(Todo));
+Todo.update = Promise.promisify(Todo.update.bind(Todo));
+Todo.find = Promise.promisify(Todo.find.bind(Todo));
+Todo.create = Promise.promisify(Todo.create.bind(Todo));
+
+
 module.exports = Todo;

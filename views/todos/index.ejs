@@ -110,9 +110,15 @@ function createTodo(text,user,url){
             task:text,
             user
         },
-        success:function(res){
-            console.log(res)
-            var markup = '<li class="ui-state-default"><div class="checkbox"><label><input type="checkbox" value="" />'+ text +'</label></div></li>';
+        success:function(todo){
+            console.log(todo)
+            var markup = `<li class="ui-state-default">
+                    <div class="checkbox">
+                        <label data-url="/todos/${todo._id}/update">
+                            <input type="checkbox" value="" />${text}
+                        </label>
+                    </div>
+                </li>`;
             $('#sortable').append(markup);
             $('.add-todo').val('');
         },
