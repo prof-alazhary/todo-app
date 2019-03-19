@@ -32,5 +32,8 @@ module.exports = {
     select(userId) {
 
         return Todo.find({ user: userId });
+    },
+    delete(todoId){
+        
     }
 }
