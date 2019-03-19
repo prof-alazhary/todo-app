@@ -19,8 +19,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-app.use(express.static(path.join(__dirname, 'public')));
+const p = path.join(__dirname, 'public');
+console.log('p-->',p)
+app.use('/static',express.static(p));
 
 // attach routes to app  
 const routes = require('./config/routes');
