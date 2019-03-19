@@ -64,7 +64,7 @@ $('.add-todo').on('keypress',function (e) {
       e.preventDefault
       if (e.which == 13) {
            if($(this).val() != ''){
-           var todo = $(this).val(),
+           const todo = $(this).val(),
                 url = $(this).data('url'),
                 user = $(this).data('user');
 
@@ -78,7 +78,7 @@ $('.add-todo').on('keypress',function (e) {
 // mark task as done
 $('.todolist').on('change','#sortable li input[type="checkbox"]',function(){
     if($(this).prop('checked')){
-        var taskLbl = $(this).parent().parent().find('label'),
+        const taskLbl = $(this).parent().parent().find('label'),
             task = taskLbl.text(),
             url = taskLbl.data('url');
 
@@ -96,7 +96,7 @@ $('.todolist').on('click','.remove-item',function(){
 
 // count tasks
 function countTodos(){
-    var count = $("#sortable li").length;
+    const count = $("#sortable li").length;
     $('.count-todos').html(count);
 }
 
@@ -112,7 +112,7 @@ function createTodo(text,user,url){
         },
         success:function(todo){
             console.log(todo)
-            var markup = `<li class="ui-state-default">
+            const markup = `<li class="ui-state-default">
                     <div class="checkbox">
                         <label data-url="/todos/${todo._id}/update">
                             <input type="checkbox" value="" />${text}
@@ -136,8 +136,8 @@ function done(doneItem, url){
         method:'PUT',
         success:function(res){
             console.log(res)
-            var done = doneItem;
-            var markup = '<li>'+ done +'<button class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>';
+            const done = doneItem;
+            const markup = '<li>'+ done +'<button class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>';
             $('#done-items').append(markup);
             $('.remove').remove();
         },
@@ -149,7 +149,7 @@ function done(doneItem, url){
 
 //mark all tasks as done
 function AllDone(){
-    var myArray = [];
+    const myArray = [];
 
     $('#sortable li').each( function() {
          myArray.push($(this).text());   

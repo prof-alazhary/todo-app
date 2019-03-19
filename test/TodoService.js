@@ -1,12 +1,12 @@
 global.Promise = require('bluebird');
 
 require('sinon-mongoose');
-var sinon = require('sinon'),
+const sinon = require('sinon'),
     chai = require('chai'),
     { expect } = chai.expect,
     should = chai.should();
 
-var Todo = require('../models/Todo'),
+const Todo = require('../models/Todo'),
     TodoService = require('../services/TodoService'),
     { todo, todos } = require('./factories/Todo');
 
