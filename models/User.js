@@ -1,4 +1,5 @@
-const { model } = require('../config/mongoose');
+const { model } = require('../config/mongoose'),
+    promisify = require('../helpers/promisify');
 
 const User = model('User', {
     name: {
@@ -16,8 +17,6 @@ const User = model('User', {
     }
 });
 
-User.findOne = Promise.promisify(User.findOne.bind(User));
-User.find = Promise.promisify(User.find.bind(User));
-User.create = Promise.promisify(User.create.bind(User));
+promisify(User,['findOne','find','create']);
 
 module.exports = User;

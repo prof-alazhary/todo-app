@@ -1,4 +1,5 @@
-const { model } = require('../config/mongoose');
+const { model } = require('../config/mongoose'),
+    promisify = require('../helpers/promisify');
 
 const Todo = model('Todo', {
     user:{
@@ -19,11 +20,6 @@ const Todo = model('Todo', {
     }
 });
 
-
-Todo.updateOne = Promise.promisify(Todo.updateOne.bind(Todo));
-Todo.update = Promise.promisify(Todo.update.bind(Todo));
-Todo.find = Promise.promisify(Todo.find.bind(Todo));
-Todo.create = Promise.promisify(Todo.create.bind(Todo));
-
+promisify(Todo,['updateOne','update','find','create']);
 
 module.exports = Todo;
