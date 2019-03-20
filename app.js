@@ -31,6 +31,8 @@ routes.forEach(route => app.use(route.path, route.handler));
 app.set('env', require('./config/env').env);
 console.log('NODE_ENV-->',process.env.NODE_ENV)
 console.log('.env.HAMADA-->',process.env.HAMADA)
+console.log('TIMES-->',process.env.TIMES)
+
 
 
 // catch 404 and forward to error handler
