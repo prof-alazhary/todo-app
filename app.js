@@ -30,8 +30,7 @@ routes.forEach(route => app.use(route.path, route.handler));
 // set env to app
 app.set('env', require('./config/env').env);
 console.log('NODE_ENV-->',process.env.NODE_ENV)
-console.log('.env.HAMADA-->',process.env.HAMADA)
-console.log('TIMES-->',process.env.TIMES)
+console.log('MONGODB_URI-->', process.env.MONGODB_URI)
 
 
 
