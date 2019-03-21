@@ -20,6 +20,6 @@ const Todo = model('Todo', {
     }
 });
 
-promisify(Todo,['updateOne','update','find','create']);
+promisify(Todo,['updateOne','update','find','create','deleteOne']);
 
 module.exports = Todo;

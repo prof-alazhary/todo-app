@@ -17,8 +17,7 @@ $('.add-todo').on('keypress',function (e) {
                 url = $(this).data('url'),
                 user = $(this).data('user');
 
-            createTodo(todo,user,url); 
-            countTodos();
+            createTodo(todo, user, url); 
            }else{
                // some validation
            }
@@ -29,12 +28,12 @@ $('.todolist').on('change','#sortable li input[type="checkbox"]',function(){
     if($(this).prop('checked')){
         const taskLbl = $(this).parent().parent().find('label'),
             task = taskLbl.text(),
-            url = taskLbl.data('url');
+            url = taskLbl.data('url'),
+            taskId = taskLbl.data('id');
 
         $(this).parent().parent().parent().addClass('remove');
 
-        done(task, url);
-        countTodos();
+        done(task, url, taskId);
     }
 });
 
@@ -63,58 +62,73 @@ function createTodo(text,user,url){
             console.log(todo)
             const markup = `<li class="ui-state-default">
                     <div class="checkbox">
-                        <label data-url="/todos/${todo._id}/update">
+                        <label data-url="/todos/${todo._id}" data-id="${todo._id}">
                             <input type="checkbox" value="" />${text}
                         </label>
                     </div>
                 </li>`;
             $('#sortable').append(markup);
             $('.add-todo').val('');
+            countTodos();
         },
         error:function(err){
-            console.log(err)
+            console.log(err);
+            countTodos();
         }
     })
 }
 
 //mark task as done
-function done(doneItem, url){
+function done(doneItem, url, taskId){
 
     $.ajax({
         url,
         method:'PUT',
         success:function(res){
             console.log(res)
-            const done = doneItem;
-            const markup = '<li>'+ done +'<button class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>';
+            const markup = `<li>${doneItem}<button data-url="/todos/${taskId}" class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>`;
             $('#done-items').append(markup);
             $('.remove').remove();
+            countTodos();
         },
         error:function(err){
-            console.log(err)
+            console.log(err);
+            countTodos();
         }
     })
 }
 
 //mark all tasks as done
 function AllDone(){
-    const myArray = [];
+    const todos = [];
 
     $('#sortable li').each( function() {
-         myArray.push($(this).text());   
+         todos.push({task: $(this).text(), id: $(this).find('label').data().id });   
     });
     
     // add to done
-    for (i = 0; i < myArray.length; i++) {
-        $('#done-items').append('<li>' + myArray[i] + '<button class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>');
+    for (i = 0; i < todos.length; i++) {
+        const todo = todos[i];
+        $('#done-items').append(`<li>${todo.task}<button data-url="/todos/${todo.id}" class="btn btn-default btn-xs pull-right  remove-item"><span class="glyphicon glyphicon-remove"></span></button></li>`);
     }
     
-    // myArray
+    // todos
     $('#sortable li').remove();
     countTodos();
 }
 
 //remove done task from list
 function removeItem(element){
-    $(element).parent().remove();
+    const url = $(element).data().url;
+    $.ajax({
+        url,
+        method: 'DELETE',
+        success: function(res){
+            console.log(res);
+            $(element).parent().remove();
+        },
+        error: function(err){
+            console.log(err);
+        }
+    })
 }

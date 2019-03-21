@@ -22,7 +22,7 @@ module.exports = {
                 }
             });
         } else {
-            return Todo.updateOne({_id:ObjectId(todo.id)},{
+            return Todo.updateOne({_id: ObjectId(todo.id)},{
                 $set: {
                     done: true
                 }
@@ -35,5 +35,6 @@ module.exports = {
     },
     delete(todoId){
         
+        return Todo.deleteOne({ _id: ObjectId(todoId) });
     }
 }

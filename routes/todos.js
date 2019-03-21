@@ -13,7 +13,7 @@ router.post('/new', function (req, res, next) {
     });
 });
 
-router.put('/:id/update', function (req, res, next) {
+router.put('/:id', function (req, res, next) {
 
     TodoService.update(null, { id: req.params.id })
     .then((result) => {
@@ -23,4 +23,13 @@ router.put('/:id/update', function (req, res, next) {
     });
 });
 
+router.delete('/:id', function (req, res, next){
+
+    TodoService.delete(req.params.id)
+    .then((result) => {
+        res.json(result);
+    }).catch((err) => {     
+        res.json(err);
+    });
+})
 module.exports = router;
