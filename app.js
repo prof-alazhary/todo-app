@@ -6,9 +6,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
 const app = express();
 
 // view engine setup
@@ -19,9 +16,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-const p = path.join(__dirname, 'public');
-console.log('p-->',p)
-app.use('/static',express.static(p));
+
+const _path = path.join(__dirname, 'public');
+app.use('/static',express.static(_path));
 
 // attach routes to app  
 const routes = require('./config/routes');
@@ -29,8 +26,7 @@ routes.forEach(route => app.use(route.path, route.handler));
 
 // set env to app
 app.set('env', require('./config/env').env);
-console.log('NODE_ENV-->',process.env.NODE_ENV)
-console.log('MONGODB_URI-->', process.env.MONGODB_URI)
+console.log('NODE_ENV-->',process.env.NODE_ENV);
 
 
 
