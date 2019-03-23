@@ -1,6 +1,5 @@
 global.Promise = require('bluebird');
 
-require('sinon-mongoose');
 const sinon = require('sinon'),
     chai = require('chai'),
     { expect } = chai.expect,
