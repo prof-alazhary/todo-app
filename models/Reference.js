@@ -1,18 +1,25 @@
-const { model } = require('../config/mongoose'),
+const { model, Schema } = require('../config/mongoose'),
     promisify = require('../helpers/promisify');
 
-const Reference = model('Reference', {
+const refSchema = new Schema({
     summary:{
-        type: String
+        type: String,
+        default: ''
     },
     url: {
-        type: String
+        type: String,
+        default: ''
     },
     tags:{
-       type: Array
+       type: Array,
+       default: []
     }
 });
 
-promisify(Reference,['updateOne','update','find','create','deleteOne']);
+refSchema.index({summary:'text'});
+
+const Reference = model('Reference', refSchema);
+
+promisify(Reference,['updateOne','update','find', 'findOne','create','deleteOne']);
 
 module.exports = Reference;
