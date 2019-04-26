@@ -1,4 +1,5 @@
 global.Promise = require('bluebird');
+global.appConfig = require('./config/appConfig');
 
 const createError = require('http-errors');
 const express = require('express');

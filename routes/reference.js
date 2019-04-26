@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
+const verifyToken = require('../policies/verifyToken');
 const ReferenceService = require('../services/ReferenceService');
 
-router.get('/:id', function (req, res, next){
+router.get('/:id', verifyToken, function (req, res, next){
     ReferenceService.select(req.params.id)
     .then((result) => {
         res.json(result);
@@ -12,7 +12,7 @@ router.get('/:id', function (req, res, next){
     });
 })
 
-router.post('/new', function (req, res, next) {
+router.post('/new', verifyToken, function (req, res, next) {
 
     ReferenceService.create(req.body)
     .then((result) => {
@@ -22,7 +22,7 @@ router.post('/new', function (req, res, next) {
     });
 });
 
-router.put('/:id', function (req, res, next) {
+router.put('/:id', verifyToken, function (req, res, next) {
 
     ReferenceService.update(req.params.id, req.body)
     .then((result) => {
@@ -32,7 +32,7 @@ router.put('/:id', function (req, res, next) {
     });
 });
 
-router.delete('/:id', function (req, res, next){
+router.delete('/:id', verifyToken, function (req, res, next){
 
     ReferenceService.delete(req.params.id)
     .then((result) => {
@@ -42,7 +42,8 @@ router.delete('/:id', function (req, res, next){
     });
 })
 
-router.post('/search', function (req, res, next) {
+router.post('/search', verifyToken, function (req, res, next) {
+    console.log('header',req.headers)
     ReferenceService.search(req.body)
     .then((result) => {
         res.json(result);
