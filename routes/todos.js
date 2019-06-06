@@ -1,35 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const TodoService = require('../services/TodoService');
+const TodoController = require('../controllers/TodoController');
 
-router.post('/new', function (req, res, next) {
+router.post('/new', TodoController.create);
 
-    TodoService.create(req.body)
-    .then((result) => {
-        res.json(result);
-    }).catch((err) => {        
-        res.json(err);
-    });
-});
+router.put('/:id', TodoController.update);
 
-router.put('/:id', function (req, res, next) {
+router.delete('/:id', TodoController.delete);
 
-    TodoService.update(null, { id: req.params.id })
-    .then((result) => {
-        res.json(result);
-    }).catch((err) => {     
-        res.json(err);
-    });
-});
-
-router.delete('/:id', function (req, res, next){
-
-    TodoService.delete(req.params.id)
-    .then((result) => {
-        res.json(result);
-    }).catch((err) => {     
-        res.json(err);
-    });
-})
 module.exports = router;
