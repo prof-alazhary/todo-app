@@ -1,4 +1,4 @@
-function wantsJson(req, res, next){
+function wantsJSON(req, res, next){
     const acceptField = req.headers.accept || req.headers.accepts ;
     if(acceptField && acceptField.toLowerCase().includes('json')){
         req.wantsJSON = true
@@ -6,4 +6,4 @@ function wantsJson(req, res, next){
     next();
 }
 
-module.exports = wantsJson;
+module.exports = wantsJSON;

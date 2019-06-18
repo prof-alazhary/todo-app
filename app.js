@@ -9,7 +9,7 @@ const logger = require('morgan');
 
 const app = express();
 
-const wantsJsonPolicy = require('./policies/wantsJson');
+const wantsJSONPolicy = require('./policies/wantsJSON');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +25,7 @@ app.use('/static',express.static(_path));
 
 // attach routes to app  
 const routes = require('./config/routes');
-routes.forEach(route => app.use(route.path, wantsJsonPolicy, route.handler));
+routes.forEach(route => app.use(route.path, wantsJSONPolicy, route.handler));
 
 // set env to app
 app.set('env', require('./config/env').env);
